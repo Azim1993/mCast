@@ -25,7 +25,7 @@ return new class extends Migration
             FOR EACH ROW
             BEGIN
                 UPDATE `timelines`
-                SET `total_reaction` = GREATEST(`total_reactions` - 1, 0)
+                SET `total_reaction` = GREATEST(`total_reaction` - 1, 0)
                 WHERE `id` = OLD.timeline_id;
             END;
         SQL;

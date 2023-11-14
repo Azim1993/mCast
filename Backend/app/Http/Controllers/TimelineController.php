@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TimelineRequest;
 use App\Http\Resources\TimelineResource;
+use App\Repositories\Timeline\TimelineReactionRepository;
 use App\Repositories\Timeline\TimelineRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -14,7 +15,8 @@ use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 class TimelineController extends Controller
 {
     public function __construct(
-        public TimelineRepository $timelineRepository
+        public TimelineRepository $timelineRepository,
+        public TimelineReactionRepository $timelineReactionRepository
     ){}
 
     public function getTimelines(): JsonResponse
@@ -44,6 +46,20 @@ class TimelineController extends Controller
             new TimelineResource($timeline),
             ResponseAlias::HTTP_CREATED
         );
+    }
+
+    public function toggleReaction($timelineId): JsonResponse
+    {
+        $user = auth()->user();
+        $timeline = $this->timelineRepository->findOrFail($timelineId);
+
+        if ($this->timelineReactionRepository->firstExist($timeline, $user)) {
+            $this->timelineReactionRepository->remove($timeline, $user);
+            return $this->jsonResponse('Removed reaction successfully');
+        }
+
+        $this->timelineReactionRepository->add($timeline, $user);
+        return $this->jsonResponse('Added reaction successfully');
     }
 
 
