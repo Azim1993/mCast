@@ -21,5 +21,6 @@ Route::middleware('auth:sanctum')->group(function() {
         Route::get('', [\App\Http\Controllers\TimelineController::class, 'getTimelines']);
         Route::post('', [\App\Http\Controllers\TimelineController::class, 'storeTimeline']);
         Route::post('{timelineId}/reaction', [\App\Http\Controllers\TimelineController::class, 'toggleReaction']);
+        Route::post('{timelineId}/comment', [\App\Http\Controllers\TimelineController::class, 'storeComment']);
     });
 });

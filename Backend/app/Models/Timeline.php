@@ -6,6 +6,7 @@ use App\Data\Enums\PreviewPrivacyTypeEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Timeline extends Model
 {
@@ -25,5 +26,10 @@ class Timeline extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function comments(): HasMany
+    {
+        return $this->hasMany(TimelineComment::class);
     }
 }

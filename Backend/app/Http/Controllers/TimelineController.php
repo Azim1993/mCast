@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TimelineRequest;
+use App\Http\Resources\CommentResource;
 use App\Http\Resources\TimelineResource;
+use App\Repositories\Timeline\CommentRepository;
 use App\Repositories\Timeline\TimelineReactionRepository;
 use App\Repositories\Timeline\TimelineRepository;
 use Illuminate\Http\JsonResponse;
@@ -16,12 +18,14 @@ class TimelineController extends Controller
 {
     public function __construct(
         public TimelineRepository $timelineRepository,
-        public TimelineReactionRepository $timelineReactionRepository
+        public TimelineReactionRepository $timelineReactionRepository,
+        public CommentRepository $commentRepository
     ){}
 
     public function getTimelines(): JsonResponse
     {
         $timelines = $this->timelineRepository->getTimelines();
+//        dd($timelines->toArray());
         return $this->jsonResponse(
             'Your timeline list',
             new LengthAwarePaginator(
@@ -62,5 +66,19 @@ class TimelineController extends Controller
         return $this->jsonResponse('Added reaction successfully');
     }
 
+    public function storeComment($timelineId, Request $request): JsonResponse
+    {
+        $request->validate(['comment' => 'required|max:255']);
 
+        $timeline = $this->timelineRepository->findOrFail($timelineId);
+        $user = auth()->user();
+
+        $comment = $this->commentRepository->addNew($timeline, $user, $request->get('comment'));
+        $comment->load('user');
+        return $this->jsonResponse(
+            'Stored comment successfully',
+            new CommentResource($comment),
+            ResponseAlias::HTTP_CREATED
+        );
+    }
 }

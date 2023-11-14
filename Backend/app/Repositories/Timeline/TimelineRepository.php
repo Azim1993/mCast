@@ -24,6 +24,7 @@ class TimelineRepository extends BaseRepository
     {
         return $this->query()
             ->with('user')
+            ->withCount('comments')
             ->latest()
             ->paginate(30);
     }

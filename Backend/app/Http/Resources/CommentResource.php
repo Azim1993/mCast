@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class TimelineResource extends JsonResource
+class CommentResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,10 +16,7 @@ class TimelineResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'content' => $this->content,
-            'preview_privacy' => $this->preview_privacy,
-            'total_reaction' => $this->total_reaction,
-            'total_comments' => $this->comments_count,
+            'comment' => $this->comment,
             'user' => new UserResource($this->user)
         ];
     }
