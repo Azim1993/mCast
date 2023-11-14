@@ -35,8 +35,9 @@ class UserController extends Controller
         );
     }
 
-    public function getDetail()
+    public function getDetail(?int $userId = null)
     {
-        dd(auth()->user());
+        $userId = $userId ?? auth()->id();
+        return $this->userRepository->findOrFail($userId);
     }
 }

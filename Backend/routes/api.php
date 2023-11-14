@@ -14,5 +14,6 @@ Route::middleware('auth:sanctum')->group(function() {
         Route::post('{userId}/unfollow', [\App\Http\Controllers\UserController::class, 'unfollow']);
 
         Route::get('', [\App\Http\Controllers\UserController::class, 'getDetail']);
+        Route::get('{userId}', [\App\Http\Controllers\UserController::class, 'getDetail']);
     });
 });
