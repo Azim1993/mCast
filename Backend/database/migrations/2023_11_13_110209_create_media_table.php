@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('media', function (Blueprint $table) {
             $table->id();
             $table->string('src');
-            $table->enum('type', \App\Enums\MediaTypeEnum::toArray())->default(\App\Enums\MediaTypeEnum::IMAGE->value);
+            $table->enum('type', \app\Data\Enums\MediaTypeEnum::toArray())->default(\app\Data\Enums\MediaTypeEnum::IMAGE->value);
             $table->string('mediaable_type')->nullable();
             $table->unsignedBigInteger('mediaable_id')->nullable();
             $table->timestamps();

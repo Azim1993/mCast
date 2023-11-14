@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Enums\MediaTypeEnum;
+use app\Data\Enums\MediaTypeEnum;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**

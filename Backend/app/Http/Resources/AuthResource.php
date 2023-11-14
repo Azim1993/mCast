@@ -2,11 +2,20 @@
 
 namespace App\Http\Resources;
 
+use App\Data\DTO\AuthTokenDTO;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class AuthResource extends JsonResource
 {
+    public readonly AuthTokenDTO $authTokenDTO;
+
+    public function __construct($resource, AuthTokenDTO $authTokenDTO)
+    {
+        $this->authTokenDTO = $authTokenDTO;
+        parent::__construct($resource);
+    }
+
     /**
      * Transform the resource into an array.
      *
@@ -14,6 +23,9 @@ class AuthResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'user' => new UserResource($this),
+            'access' => $this->authTokenDTO
+        ];
     }
 }

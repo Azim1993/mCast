@@ -9,7 +9,7 @@ use Illuminate\Support\Collection;
 
 abstract class BaseRepository
 {
-    abstract function model(): Model;
+    abstract function model();
 
 
     protected function findOrFail($id): Model

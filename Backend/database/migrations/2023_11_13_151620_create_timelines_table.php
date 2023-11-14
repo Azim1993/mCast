@@ -19,7 +19,7 @@ return new class extends Migration
                 ->cascadeOnDelete();
 
             $table->string('content');
-            $table->enum('preview_privacy', \App\Enums\PreviewPrivacyTypeEnum::toArray())->default(\App\Enums\PreviewPrivacyTypeEnum::PUBLIC->value);
+            $table->enum('preview_privacy', \app\Data\Enums\PreviewPrivacyTypeEnum::toArray())->default(\app\Data\Enums\PreviewPrivacyTypeEnum::PUBLIC->value);
             $table->unsignedBigInteger('total_reaction')->default(0);
             $table->timestamps();
         });

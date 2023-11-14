@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Enums\PreviewPrivacyTypeEnum;
+use app\Data\Enums\PreviewPrivacyTypeEnum;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
