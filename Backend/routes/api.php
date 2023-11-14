@@ -16,4 +16,9 @@ Route::middleware('auth:sanctum')->group(function() {
         Route::get('', [\App\Http\Controllers\UserController::class, 'getDetail']);
         Route::get('{userId}', [\App\Http\Controllers\UserController::class, 'getDetail']);
     });
+
+    Route::prefix('timelines')->group(function() {
+        Route::get('', [\App\Http\Controllers\TimelineController::class, 'getTimelines']);
+        Route::post('', [\App\Http\Controllers\TimelineController::class, 'storeTimeline']);
+    });
 });
