@@ -20,7 +20,8 @@ class TimelineResource extends JsonResource
             'preview_privacy' => $this->preview_privacy,
             'total_reaction' => $this->total_reaction,
             'total_comments' => $this->comments_count,
-            'user' => new UserResource($this->user)
+            'user' => new UserResource($this->user),
+            'comments' => $this->relationLoaded('comments') ? CommentResource::collection($this->comments) : null
         ];
     }
 }

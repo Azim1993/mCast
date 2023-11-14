@@ -8,6 +8,7 @@ use App\Http\Resources\TimelineResource;
 use App\Repositories\Timeline\CommentRepository;
 use App\Repositories\Timeline\TimelineReactionRepository;
 use App\Repositories\Timeline\TimelineRepository;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -25,7 +26,6 @@ class TimelineController extends Controller
     public function getTimelines(): JsonResponse
     {
         $timelines = $this->timelineRepository->getTimelines();
-//        dd($timelines->toArray());
         return $this->jsonResponse(
             'Your timeline list',
             new LengthAwarePaginator(
@@ -37,6 +37,23 @@ class TimelineController extends Controller
                     'path' => config('app.url') . '/api'
                 ]
             )
+        );
+    }
+
+    public function getTimelineDetail($timelineId): JsonResponse
+    {
+        $timeline = $this->timelineRepository->query()
+            ->withCount('comments')
+            ->with(['comments' => function(HasMany $comments) {
+                $comments->latest()
+                    ->with('user')
+                    ->take(15);
+            }])
+            ->findOrFail($timelineId);
+
+        return $this->jsonResponse(
+            'Timeline detail',
+            new TimelineResource($timeline)
         );
     }
 
