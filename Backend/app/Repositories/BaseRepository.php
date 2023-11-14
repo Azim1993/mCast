@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -12,7 +13,11 @@ abstract class BaseRepository
     abstract function model();
 
 
-    protected function findOrFail($id): Model
+    public function query(): Builder
+    {
+        return $this->model()::query();
+    }
+    public function findOrFail($id): Model
     {
         return $this->model()::findOrFail($id);
     }
