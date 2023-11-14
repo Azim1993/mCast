@@ -43,6 +43,12 @@ class AuthService implements AuthInerface
         return new AuthResource($user, $this->generateToken($user));
     }
 
+
+    public function logout(User $user): bool
+    {
+        return $user->currentAccessToken()->delete();
+    }
+
     public function generateToken(User $user): AuthTokenDTO
     {
         $apiTokenExpiredAt = now()->addMinutes(config('sanctum.expiration'));

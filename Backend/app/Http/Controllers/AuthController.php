@@ -46,6 +46,23 @@ class AuthController extends Controller
         return $this->jsonResponse('Invalid Credentials', null, ResponseAlias::HTTP_UNAUTHORIZED);
     }
 
+    public function logout(Request $request): JsonResponse
+    {
+        try {
+            $this->authInerface->logout($request->user());
+            return $this->jsonResponse(
+                'Logout successfully',
+            );
+        }
+        catch (\Exception $exception) {
+            return $this->jsonResponse(
+                'Some error Happened',
+                $exception->getMessage(),
+                ResponseAlias::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
 
     /**
      * @throws ValidationException
