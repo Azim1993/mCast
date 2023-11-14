@@ -32,9 +32,10 @@ class UserRepository extends BaseRepository implements UserRepoInterface
             ]);
         }
 
-        $request->merge([
-            'password' =>  Hash::make($request->get('password'))
-        ]);
+        if ($request->has('password'))
+            $request->merge([
+                'password' =>  Hash::make($request->get('password'))
+            ]);
 
         return $this->create($request->except('profile_pic'));
     }
