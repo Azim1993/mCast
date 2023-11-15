@@ -18,6 +18,7 @@ export default {
             'primary-light': '#83c5be',
             secondary: '#e29578',
             'secondary-light': '#ffddd2',
+            'secondary-dark': '#c36744',
             light: '#edf6f9'
         },
         fontSize: {
