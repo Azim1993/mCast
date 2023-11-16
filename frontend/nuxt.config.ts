@@ -8,12 +8,18 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
+  build: {
+    transpile: ['@vee-validate/rules']
+  },
   runtimeConfig: {
     public: {
         baseURL: process.env.BASE_URL
     }
   },
   modules: [
-    '@pinia/nuxt'
+    '@pinia/nuxt',
+    '@vee-validate/nuxt',
+    '@pinia-plugin-persistedstate/nuxt',
+    '@tailvue/nuxt',
   ]
 })

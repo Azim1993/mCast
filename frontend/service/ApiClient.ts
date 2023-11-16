@@ -1,6 +1,6 @@
 import { useToast } from 'tailvue';
 import { storeToRefs } from "pinia";
-import { useAuthStore } from '~/store/useAuthStore';
+import { useAuthStore } from '~/store/authStore';
 import HttpStatusCode from "~/service/HttpStatusCode";
 
 export default {
@@ -27,12 +27,12 @@ export default {
           console.debug(response)
           if (response.status === HttpStatusCode.UNPROCESSABLE_ENTITY) {
             // @ts-ignore
-            toast.warning(response.error)
+            toast.warning(response._data.message)
             // @ts-ignore
-            return response.error
+            return response
           }
           // @ts-ignore
-          useToast().danger(response.error)
+          useToast({theme: 'white'}).danger(response._data.message)
           if (response.status === HttpStatusCode.UNAUTHORIZED) {
             navigateTo('login')
           }

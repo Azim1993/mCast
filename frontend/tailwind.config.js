@@ -7,6 +7,7 @@ export default {
     "./plugins/**/*.{js,ts}",
     "./app.vue",
     "./error.vue",
+    "node_modules/tailvue/dist/tailvue.es.js",
   ],
   theme: {
     extend: {

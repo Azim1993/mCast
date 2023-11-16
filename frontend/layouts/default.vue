@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { XCircleIcon } from "@heroicons/vue/24/outline"
-
+import LogoutFormVue from "~/components/Auth/LogoutForm.vue";
 </script>
 
 <template>
@@ -21,9 +21,7 @@ import { XCircleIcon } from "@heroicons/vue/24/outline"
                 </div>
             </div>
             <div class="">
-                <form action="">
-                    <button type="submit" class="font-semibold">Logout</button>
-                </form>
+                <LogoutFormVue />
             </div>
         </div>
     </nav>
