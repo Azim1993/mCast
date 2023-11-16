@@ -29,7 +29,7 @@ export default {
             // @ts-ignore
             toast.warning(response._data.message)
             // @ts-ignore
-            return response
+            return response._data.errors
           }
           // @ts-ignore
           useToast({theme: 'white'}).danger(response._data.message)
