@@ -21,6 +21,10 @@
   "dependencies": {
     "@editorjs/editorjs": "^2.28.2",
     "@heroicons/vue": "^2.0.18",
+    "@pinia-plugin-persistedstate/nuxt": "^1.2.0",
+    "@pinia/nuxt": "^0.5.1",
+    "@tailvue/nuxt": "^1.0.0",
+    "pinia": "^2.1.7",
     "vue3-click-away": "^1.2.4"
   }
 }

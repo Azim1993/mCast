@@ -7,5 +7,13 @@ export default defineNuxtConfig({
       tailwindcss: {},
       autoprefixer: {},
     },
-  }
+  },
+  runtimeConfig: {
+    public: {
+        baseURL: process.env.BASE_URL
+    }
+  },
+  modules: [
+    '@pinia/nuxt'
+  ]
 })
