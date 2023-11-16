@@ -14,6 +14,7 @@ export const useAuthStore = defineStore('useAuthStore', () => {
             useToast().success(data.value.message)
         }
         userInfo.value = data.value.data.user
+        accessToken.value = data.value.data.access.bearerToken
         isLoading.value = false;
         navigateTo('/home');
     };
@@ -25,6 +26,7 @@ export const useAuthStore = defineStore('useAuthStore', () => {
             useToast().success(data.value.message)
         }
         userInfo.value = data.value.data.user
+        accessToken.value = data.value.data.access.bearerToken
         isLoading.value = false;
         navigateTo('/home');
     };
@@ -45,14 +47,14 @@ export const useAuthStore = defineStore('useAuthStore', () => {
         accessToken,
         isLoading,
         handleRegistration,
-        handleLogout
+        handleLogout,
+        userInfo
     }
-// },
-// {
-//     persist: {
-//         paths: ['accessToken'],
-//         storage: persistedState.cookiesWithOptions({
-//             sameSite: 'strict'
-//         })
-//     }
+},
+{
+    persist: {
+        storage: persistedState.cookiesWithOptions({
+          sameSite: 'strict',
+        }),
+    },
 })

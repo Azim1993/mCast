@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import {useAuthStore} from '~/store/authStore'
 const {handleLogout} = useAuthStore()
-
 </script>
 <template>
     <form method="post" @submit.prevent="handleLogout">
