@@ -17,5 +17,10 @@
     "tailwindcss": "^3.3.5",
     "vue": "^3.3.8",
     "vue-router": "^4.2.5"
+  },
+  "dependencies": {
+    "@editorjs/editorjs": "^2.28.2",
+    "@heroicons/vue": "^2.0.18",
+    "vue3-click-away": "^1.2.4"
   }
 }
