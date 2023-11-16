@@ -1,6 +1,9 @@
 <script lang="ts" setup>
 import RegisterForm from '~/components/Auth/RegisterForm.vue';
-definePageMeta({ layout: 'guest' });
+definePageMeta({ 
+    layout: 'guest',
+    middleware: 'guest'
+ });
 
 </script>
 

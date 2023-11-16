@@ -1,6 +1,9 @@
 <script lang="ts" setup>
     import LoginForm from '~/components/Auth/LoginForm.vue';
-    definePageMeta({ layout: 'guest' });
+    definePageMeta({ 
+        layout: 'guest',
+        middleware: 'guest'
+    });
 </script>
 
 <template>

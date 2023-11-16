@@ -14,6 +14,9 @@
 </template>
 
 <script lang="ts" setup>
-definePageMeta({ layout: 'guest' });
+definePageMeta({ 
+    layout: 'guest',
+    middleware: 'guest'
+ });
 
 </script>

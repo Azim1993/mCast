@@ -1,6 +1,11 @@
 <script lang="ts" setup>
 import { GlobeAltIcon, CameraIcon, CheckIcon, UsersIcon, UserMinusIcon } from "@heroicons/vue/24/outline"
- const imageUrls = ref([])
+
+definePageMeta({
+  middleware: 'auth'
+})
+
+const imageUrls = ref([])
 const showPrivacyDropper = ref(false)
 const onClickAway = () => showPrivacyDropper.value = false
 const handleUploadedMedias = (event: { target: { files: any } }) => {
