@@ -42,13 +42,20 @@ export const useAuthStore = defineStore('useAuthStore', () => {
         isLoading.value = false;
         navigateTo('/login');
     };
+
+    const resetAuthStateToken = () => {
+        userInfo.value = {}
+        accessToken.value = ''
+        isLoading.value = false
+    }
     return {
         handleLogin,
         accessToken,
         isLoading,
         handleRegistration,
         handleLogout,
-        userInfo
+        userInfo,
+        resetAuthStateToken
     }
 },
 {

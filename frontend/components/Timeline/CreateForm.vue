@@ -3,6 +3,8 @@ import { GlobeAltIcon, CameraIcon, CheckIcon, UsersIcon, UserMinusIcon } from "@
 import { ErrorMessage, Field, Form } from 'vee-validate'
 import {registrationSchema} from '~/schema/authSchema'
 import {useTimelineStore} from '~/store/timelineStore'
+import { defineEmits } from 'vue'
+
 
 const previewPrivacySets = {
     public: 'Everyone can view',
@@ -11,6 +13,7 @@ const previewPrivacySets = {
 }
 const {handleTimelineStore} = useTimelineStore()
 
+const emitter = defineEmits()
 const timeline = ref({
     content: '',
     previewPrivacy: 'public',
@@ -35,6 +38,7 @@ const handleSubmit = () => {
                 images: []
             }
             imageUrls.value = []
+            emitter('timeline:refresh')
         })
 }
 
