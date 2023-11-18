@@ -6,6 +6,8 @@ use App\Models\User;
 use App\Repositories\BaseRepository;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
@@ -15,6 +17,22 @@ class UserRepository extends BaseRepository implements UserRepoInterface
     function model()
     {
         return User::class;
+    }
+
+    /**
+     * Here $userInfo is User model email, user_name
+     *
+     * @param string|null $userInfo
+     * @return Collection
+     */
+    public function searchByUser(?string $userInfo): LengthAwarePaginator
+    {
+        return $this->query()
+            ->when($userInfo, function ($query) use ($userInfo) {
+                $query->where('user_name', 'like', "%{$userInfo}%")
+                    ->orWhere('email', 'like', "%{$userInfo}%");
+            })
+            ->paginate(20);
     }
 
     public function findByUserNameOrEmail(string $userKey): ?User

@@ -13,7 +13,7 @@ Route::middleware('auth:sanctum')->group(function() {
         Route::post('{userId}/follow', [\App\Http\Controllers\UserController::class, 'follow']);
         Route::post('{userId}/unfollow', [\App\Http\Controllers\UserController::class, 'unfollow']);
 
-        Route::get('', [\App\Http\Controllers\UserController::class, 'getDetail']);
+        Route::get('', [\App\Http\Controllers\UserController::class, 'getUsers']);
         Route::get('{userId}', [\App\Http\Controllers\UserController::class, 'getDetail']);
     });
 
