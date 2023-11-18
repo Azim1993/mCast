@@ -25,7 +25,7 @@ class TimelineController extends Controller
 
     public function getTimelines(): JsonResponse
     {
-        $timelines = $this->timelineRepository->getTimelines();
+        $timelines = $this->timelineRepository->getPersonalizeTimelines();
         return $this->jsonResponse(
             'Your timeline list',
             new LengthAwarePaginator(
@@ -48,7 +48,7 @@ class TimelineController extends Controller
                 $comments->latest()
                     ->with('user')
                     ->take(15);
-            }])
+            }, 'images'])
             ->findOrFail($timelineId);
 
         return $this->jsonResponse(

@@ -43,7 +43,7 @@ class AuthController extends Controller
 
         RateLimiter::hit($this->throttleKey($request), 5);
 
-        return $this->jsonResponse('Invalid Credentials', null, ResponseAlias::HTTP_UNAUTHORIZED);
+        return $this->jsonResponse('Invalid Credentials', null, ResponseAlias::HTTP_UNPROCESSABLE_ENTITY);
     }
 
     public function logout(Request $request): JsonResponse

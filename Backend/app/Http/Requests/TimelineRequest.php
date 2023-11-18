@@ -25,7 +25,9 @@ class TimelineRequest extends FormRequest
     {
         return [
             'content' => 'required|max:255',
-            'preview_privacy' => ['nullable', Rule::in(PreviewPrivacyTypeEnum::toArray())]
+            'preview_privacy' => ['nullable', Rule::in(PreviewPrivacyTypeEnum::toArray())],
+            'images' => ['nullable','array'],
+            'images.*' => 'image|mimes:jpeg,jpg,png,gif|required|max:10000'
         ];
     }
 }
