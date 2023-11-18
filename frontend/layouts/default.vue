@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { XCircleIcon } from "@heroicons/vue/24/outline"
 import LogoutFormVue from "~/components/Auth/LogoutForm.vue";
+import MainSearch from '~/components/MainSearch.vue'
+
 </script>
 
 <template>
@@ -8,17 +9,10 @@ import LogoutFormVue from "~/components/Auth/LogoutForm.vue";
     <nav class="bg-white p-4 drop-shadow">
         <div class="container mx-auto flex justify-between items-center">
             <div class="flex justify-start">
-                <div class="text-2xl font-bold text-secondary">M-Cast</div>
-                    <div class="relative ml-10">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="absolute left-3 top-1/2 transform -translate-y-1/2 w-6 h-6 text-gray-500">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                    </svg>
-
-                    <input type="text" placeholder="Search" class="w-80 h-10 pl-10 pr-4 rounded-lg border border-gray-300 focus:outline-none focus:border-secondary-light">
-                    <button class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 focus:outline-none">
-                        <XCircleIcon class="w-6 h-6" />
-                    </button>
-                </div>
+                <h1 class="text-2xl font-bold text-secondary">M-Cast</h1>
+                <ClientOnly>
+                    <MainSearch />
+                </ClientOnly>
             </div>
             <div class="">
                 <LogoutFormVue />
