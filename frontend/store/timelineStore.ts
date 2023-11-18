@@ -17,20 +17,16 @@ export const useTimelineStore = defineStore('useTimelineStore', () => {
 
     const handleTimelineStore = async (timelineData: timelineParams) => {
         isSubmitLoading.value = true;
-        let FD = new FormData();
-        FD.append('content', timelineData.content)
-        FD.append('preview_privacy', timelineData.previewPrivacy)
+        let formdata = new FormData();
+        formdata.append('content', timelineData.content)
+        formdata.append('preview_privacy', timelineData.previewPrivacy)
 
         if (timelineData.images?.length > 0) {
             for (let start = 0; start < timelineData.images?.length; start++) {
-                FD.append(`images[${start}]`, timelineData.images[start])
+                formdata.append(`images[${start}]`, timelineData.images[start])
             }
         }
-        // Log FormData entries
-        // for (const [key, value] of FD.entries()) {
-        //     console.log("======---: ", `${key}: ${value}`);
-        // }
-        const { data } = await ApiClient.post('/timelines', timelineData);
+        const { data, error } = await ApiClient.post('/timelines', formdata);
         if (process.client) {
             useToast().success(data.value.message)
         }

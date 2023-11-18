@@ -15,15 +15,13 @@ export default {
         method: method,
         headers: {
             Accept: 'application/json',
-            'Content-Type': 'application/json',
+            // 'Content-Type': 'application/json',
             Authorization: accessToken.value ? 'Bearer ' + accessToken.value : null
         },
         onRequestError: ({ error }) => {
             console.log("🚀 ~ file: ApiClient.ts:28 ~ interceptor ~ onRequestError:", error)
-            console.error(error)
         },
         onResponseError: ({ request, response, options }) => {
-          console.log("🚀 ~ file: ApiClient.ts:32 ~ interceptor ~ onResponseError:", request, response, options)
           const toast = useToast()
           if (response.status === HttpStatusCode.UNPROCESSABLE_ENTITY) {
             toast.warning(response._data.message)

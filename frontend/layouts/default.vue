@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import LogoutFormVue from "~/components/Auth/LogoutForm.vue";
 import MainSearch from '~/components/MainSearch.vue'
+import { useAuthStore } from "~/store/authStore"
 
+const authStore = useAuthStore()
+const {userInfo} = storeToRefs(authStore)
 </script>
 
 <template>
@@ -27,10 +30,11 @@ import MainSearch from '~/components/MainSearch.vue'
         <div class="w-1/4 pr-4">
             <div class="bg-white p-4 mb-4 rounded shadow">
                 <div class="flex justify-start w-full border-b pb-4">
-                    <div class="w-12 h-12 mr-4 bg-gray-300 rounded-lg"></div>
+                    <div v-if="!userInfo.profile_pic" class="w-12 h-12 mr-4 bg-gray-300 rounded-lg"></div>
+                    <img v-else :src="userInfo.profile_pic" class="w-12 h-12 mr-4 bg-gray-300 rounded-lg" />
                     <div class="">
-                        <h3 class="font-bold text-lg">John Doe</h3>
-                        <p class="text-gray-600"><span class="text-secondary">@</span>johndoe</p>
+                        <h3 class="font-bold text-lg">{{ userInfo.first_name + ' '+ userInfo.last_name }}</h3>
+                        <p class="text-gray-600"><span class="text-secondary">@</span>{{ userInfo.user_name }}</p>
                     </div>
                 </div>
                 <nav>
