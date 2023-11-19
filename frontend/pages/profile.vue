@@ -9,6 +9,7 @@ const {isLoading, user} = storeToRefs(userStore)
 onMounted(() => {
     nextTick(() => {
         userStore.fetchUser(userInfo.value.id)
+        useAuthStore().handleRefreshToken()
     })
 })
 </script>

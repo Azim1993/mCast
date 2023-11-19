@@ -4,6 +4,7 @@ import { useToast } from 'tailvue';
 
 export const useAuthStore = defineStore('useAuthStore', () => {
     const accessToken: Ref<string | ''> = ref('')
+    const refreshToken: Ref<string | ''> = ref('')
     const userInfo: Ref<UserInfo | {}> = ref({})
     const isLoading: Ref<Boolean | false> = ref(false);
 
@@ -16,8 +17,37 @@ export const useAuthStore = defineStore('useAuthStore', () => {
         }
         userInfo.value = data.value.data.user
         accessToken.value = data.value.data.access.bearerToken
+        refreshToken.value = data.value.data.access.refreshToken
         navigateTo('/home');
     };
+
+    const handleRefreshToken = async () => {
+        if (!refreshToken.value) {
+            console.error('===| No refresh token found |===')
+            rerturn ;
+        }
+
+        try {
+            const {data} = await useFetch(`${useRuntimeConfig().public.baseURL}/refresh/token`, {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    Authorization: 'Bearer ' + refreshToken.value
+                },
+            })
+            userInfo.value = data.value.data.user
+            accessToken.value = data.value.data.access.bearerToken
+            refreshToken.value = data.value.data.access.refreshToken
+        }
+        catch (refreshError) {
+            console.error('Token refresh failed', refreshError);
+            if (process.client) {
+                useToast().warning('UnAuthorized')
+            }
+            resetAuthStateToken()
+            navigateTo('/login')
+        }
+    }
 
     const handleRegistration = async (userInfoParams: registerParamsType, actions: any) => {
         isLoading.value = true;
@@ -27,6 +57,7 @@ export const useAuthStore = defineStore('useAuthStore', () => {
         }
         userInfo.value = data.value.data.user
         accessToken.value = data.value.data.access.bearerToken
+        refreshToken.value = data.value.data.access.refreshToken
         isLoading.value = false;
         navigateTo('/home');
     };
@@ -55,7 +86,8 @@ export const useAuthStore = defineStore('useAuthStore', () => {
         handleRegistration,
         handleLogout,
         userInfo,
-        resetAuthStateToken
+        resetAuthStateToken,
+        handleRefreshToken
     }
 },
 {

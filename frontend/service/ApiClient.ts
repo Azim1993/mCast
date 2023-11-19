@@ -18,24 +18,19 @@ export default {
             // 'Content-Type': 'application/json',
             Authorization: accessToken.value ? 'Bearer ' + accessToken.value : null
         },
-        onRequestError: ({ error }) => {
-            console.log("🚀 ~ file: ApiClient.ts:28 ~ interceptor ~ onRequestError:", error)
-        },
         onResponseError: ({ request, response, options }) => {
           const toast = useToast()
           if (response.status === HttpStatusCode.UNPROCESSABLE_ENTITY) {
             toast.warning(response._data.message)
-            return response._data.errors
+            return Promise.reject(response._data.errors)
           }
 
-          useToast({theme: 'white'}).danger(response._data.message)
           if (response.status === HttpStatusCode.UNAUTHORIZED) {
-            authStore.resetAuthStateToken()
-            navigateTo('/login')
+              return authStore.handleRefreshToken()
           }
         },
         onResponse({ request, response, options }) {
-            return response._data
+            return Promise.resolve(response._data)
         },
     });
   },
