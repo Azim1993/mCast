@@ -7,12 +7,13 @@ export default {
   async interceptor(url: string, method: 'get' | 'POST' | 'put' | 'delete', payload?: any | null) {
     const authStore = useAuthStore()
     const { accessToken } = storeToRefs(authStore);
-    return await useFetch(url,
+      return await useFetch(url,
       {
         baseURL: useRuntimeConfig().public.baseURL,
         body: method !== 'get' ? payload : undefined,
         params: method === 'get' ? payload :  undefined,
         method: method,
+        // @ts-ignore
         headers: {
             Accept: 'application/json',
             // 'Content-Type': 'application/json',
