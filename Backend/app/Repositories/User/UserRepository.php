@@ -57,4 +57,11 @@ class UserRepository extends BaseRepository implements UserRepoInterface
 
         return $this->create($request->except('profile_pic'));
     }
+
+    public function getUserProfile(int $userId): User
+    {
+        return $this->query()
+            ->withCount('followers', 'following')
+            ->findOrFail($userId);
+    }
 }

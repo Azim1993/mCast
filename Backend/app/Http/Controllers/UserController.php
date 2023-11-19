@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\UserResource;
+use App\Http\Resources\UserProfile;
 use App\Repositories\User\FollowRepository;
 use App\Repositories\User\UserRepository;
 use Illuminate\Http\JsonResponse;
@@ -37,10 +38,14 @@ class UserController extends Controller
         );
     }
 
-    public function getDetail(?int $userId = null)
+    public function getDetail(?int $userId = null): JsonResponse
     {
         $userId = $userId ?? auth()->id();
-        return $this->userRepository->findOrFail($userId);
+        $user = $this->userRepository->getUserProfile($userId);
+        return $this->jsonResponse(
+            'User profile',
+            new UserProfile($user)
+        );
     }
 
     public function getUsers(Request $request): JsonResponse
