@@ -21,6 +21,8 @@ class UserProfile extends JsonResource
             'name' => $this->name,
             'user_name' => $this->user_name,
             'email' => $this->email,
+            'is_following' => $this->is_following,
+            'is_following_back' => $this->is_following_back,
             'profile_pic' => $this->profile_pic_src,
             'total_followers' => $this->followers_count,
             'total_following' => $this->following_count

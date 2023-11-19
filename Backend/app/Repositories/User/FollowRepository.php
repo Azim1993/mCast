@@ -40,7 +40,7 @@ class FollowRepository extends BaseRepository
         return $user->follow()->detach($follower);
     }
 
-    private function checkValidParams(User $user, User $follower): ?BadRequestHttpException
+    private function checkValidParams(User $user, User $follower)
     {
         if ($user->id == $follower->id) {
             throw new BadRequestHttpException('Invalid follower data provided');

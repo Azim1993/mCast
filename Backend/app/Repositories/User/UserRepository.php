@@ -3,6 +3,7 @@
 namespace App\Repositories\User;
 
 use App\Models\User;
+use App\Models\Follower;
 use App\Repositories\BaseRepository;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -61,6 +62,10 @@ class UserRepository extends BaseRepository implements UserRepoInterface
     public function getUserProfile(int $userId): User
     {
         return $this->query()
+            ->addSelect([
+                'is_following' => Follower::selectRaw('COUNT(*)')->whereColumn('follower_id', 'users.id')->where('user_id', auth()->id())->take(1),
+                'is_following_back' => Follower::selectRaw('COUNT(*)')->where('follower_id', auth()->id())->whereColumn('user_id', 'users.id')->take(1)
+            ])
             ->withCount('followers', 'following')
             ->findOrFail($userId);
     }
