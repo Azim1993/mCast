@@ -31,7 +31,7 @@ export default {
           useToast({theme: 'white'}).danger(response._data.message)
           if (response.status === HttpStatusCode.UNAUTHORIZED) {
             authStore.resetAuthStateToken()
-            navigateTo('login')
+            navigateTo('/login')
           }
         },
         onResponse({ request, response, options }) {
