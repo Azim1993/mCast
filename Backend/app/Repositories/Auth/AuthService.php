@@ -8,13 +8,14 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Resources\AuthResource;
 use App\Models\User;
-use App\Repositories\Auth\AuthInerface;
+use App\Repositories\Auth\AuthInterface;
 use App\Repositories\User\UserRepoInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Sanctum\PersonalAccessToken;
 
-class AuthService implements AuthInerface
+class AuthService implements AuthInterface
 {
 
     public function __construct(
@@ -49,13 +50,22 @@ class AuthService implements AuthInerface
         return $user->currentAccessToken()->delete();
     }
 
+    public function handleRefreshToken(Request $request): AuthResource
+    {
+        $tokenString = $request->header('Authorization');
+        $token = substr($tokenString, 7);
+        $user = auth()->user();
+        PersonalAccessToken::findToken($token)->delete();
+        return new AuthResource($user, $this->generateToken($user));
+    }
+
     public function generateToken(User $user): AuthTokenDTO
     {
         $apiTokenExpiredAt = now()->addMinutes(config('sanctum.expiration'));
-        $apiToken = $user->createToken(TokenTypeEnum::API_TOKEN->value, ['*'], $apiTokenExpiredAt);
+        $apiToken = $user->createToken(TokenTypeEnum::API_TOKEN->value, [TokenTypeEnum::API_TOKEN->value], $apiTokenExpiredAt);
 
         $refreshTokenExpiredAt = now()->addMinutes(config('sanctum.rt_expiration'));
-        $refreshToken = $user->createToken(TokenTypeEnum::REFRESH_TOKEN->value, ['refresh_token_access'], $refreshTokenExpiredAt);
+        $refreshToken = $user->createToken(TokenTypeEnum::REFRESH_TOKEN->value, [TokenTypeEnum::REFRESH_TOKEN->value], $refreshTokenExpiredAt);
 
         return new AuthTokenDTO(
             bearerToken: $apiToken->plainTextToken,
