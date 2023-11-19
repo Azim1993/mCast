@@ -4,6 +4,7 @@ import {loginSchema} from '~/schema/authSchema'
 import {useAuthStore} from '~/store/authStore'
 
 const {handleLogin} = useAuthStore()
+const {isLoading} = storeToRefs(useAuthStore())
 </script>
 
 <template>
@@ -27,10 +28,9 @@ const {handleLogin} = useAuthStore()
             <input type="checkbox" id="remember" name="remember" class="mr-2">
             <label for="remember" class="text-gray-700 text-sm">Remember me</label>
         </div>
-
-        <!-- Login Button -->
-        <button type="submit" class="bg-secondary text-white font-bold py-2 px-10 rounded focus:outline-none focus:shadow-outline-blue active:bg-secondary-dark hover:bg-secondary-dark">
-            Log in
+        
+        <button :disabled="isLoading" type="submit" class="bg-secondary text-white font-bold py-2 px-10 rounded focus:outline-none focus:shadow-outline-blue active:bg-secondary-dark hover:bg-secondary-dark disabled:opacity-75">
+            {{  isLoading ? 'loading...' : 'Log in' }}
         </button>
     </form>
 </template>

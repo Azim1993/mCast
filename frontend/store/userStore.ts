@@ -4,6 +4,7 @@ export const useUserStore = defineStore('useUserStore', () => {
     const users = ref([])
     const isLoading = ref(false)
     const isSearchLoading = ref(false)
+    const isFollowToggleLoading = ref(false)
     const user = ref({})
 
     const fetchUsers = async (userInfo?: string) => {
@@ -21,12 +22,30 @@ export const useUserStore = defineStore('useUserStore', () => {
         user.value = data.value.data
     }
 
+    const handleFollow = async (userId?: bigint) => {
+        isFollowToggleLoading.value = true
+        const {data} = await ApiClient.post(`/users/${userId}/follow`)
+        isFollowToggleLoading.value = false
+        user.value.is_following = true
+        return Promise.resolve(data.value)
+    }
+    const handleUnFollow = async (userId?: bigint) => {
+        isFollowToggleLoading.value = true
+        const {data} = await ApiClient.post(`/users/${userId}/unfollow`)
+        isFollowToggleLoading.value = false
+        user.value.is_following = false
+        return Promise.resolve(data.value)
+    }
+
     return {
         users,
         user,
         isLoading,
         isSearchLoading,
         fetchUsers,
-        fetchUser
+        fetchUser,
+        isFollowToggleLoading,
+        handleFollow,
+        handleUnFollow
     }
 })

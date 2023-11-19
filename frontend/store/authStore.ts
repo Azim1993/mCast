@@ -10,12 +10,12 @@ export const useAuthStore = defineStore('useAuthStore', () => {
     const handleLogin = async (loginInfo: loginParamsType, actions: any) => {
         isLoading.value = true;
         const { data } = await ApiClient.post('/login', loginInfo);
+        isLoading.value = false
         if (process.client) {
             useToast().success(data.value.message)
         }
         userInfo.value = data.value.data.user
         accessToken.value = data.value.data.access.bearerToken
-        isLoading.value = false;
         navigateTo('/home');
     };
 
